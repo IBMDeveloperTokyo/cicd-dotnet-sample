@@ -31,7 +31,7 @@ namespace SampleApp.Tests
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             // Assert
-            Assert.Contains("Welcome", stringResponse);
+            Assert.Contains("Success", stringResponse);
             Assert.Contains("OpenShift", stringResponse);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
