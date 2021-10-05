@@ -22,6 +22,7 @@ OpenShiftに触れたことが無い方は、まずはぜひ、我々のハン�
 ## 1. ワークショップの準備
 
 下記ページの内容に沿って、ハンズオンワークショップの準備を実施ください。
+
 [ハンズオンワークショップ - 準備](https://github.com/IBMDeveloperTokyo/openshift-s2i-lab/blob/main/PREPARE.md)
 
 IBM CloudライトアカウントおよびGitHubアカウントの作成、OpenShiftクラスタの表示ができれば準備は完了です。
