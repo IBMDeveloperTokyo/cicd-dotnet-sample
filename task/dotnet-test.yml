@@ -1,0 +1,35 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: dotnet-test
+spec:
+  description: >-
+    dotnet test command task
+  params:
+    - default: 5.0-ubi8
+      description: The tag of .NET imagestream for .NET version
+      name: VERSION
+      type: string
+    - default: .
+      description: The location of the path to run dotnet from.
+      name: PATH_CONTEXT
+      type: string
+  results:
+    - description: test result (1 or 0)
+      name: test_result
+  steps:
+    - name: dotnet-test
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/openshift/dotnet:$(params.VERSION)
+      securityContext:
+        runAsUser: 0
+      script: |
+        #!/usr/bin/bash
+        dotnet --info
+        cd $(params.PATH_CONTEXT).Tests
+        dotnet test
+      workingDir: $(workspaces.source.path)
+  workspaces:
+    - mountPath: /workspace/source
+      name: source
