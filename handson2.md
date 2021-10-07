@@ -1,4 +1,4 @@
-# OpenShift 初めてのPipeline/GitOps ハンズオン その2
+# OpenShift 初めてのPipeline ハンズオン その2
 
 ## 1. トリガーの設定と動作確認
 

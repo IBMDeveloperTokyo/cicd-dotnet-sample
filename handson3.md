@@ -1,4 +1,6 @@
-# OpenShift 初めてのPipeline/GitOps ハンズオン その3
+# OpenShift 初めてのPipeline ハンズオン その3
+
+OpenShift Pipelineではなく OpenShift GitOpsについて、ごく簡単にご説明します。
 
 ## 1. OpenShift GitOpsインストール
 
