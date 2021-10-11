@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pipeline-dotnet-sample
+  namespace: dojo-stg
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: pipeline-dotnet-sample
+    deploymentconfig: pipeline-dotnet-sample
+  type: ClusterIP
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack

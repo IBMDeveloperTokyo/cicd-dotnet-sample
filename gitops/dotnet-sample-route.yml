@@ -1,0 +1,15 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  labels:
+    app: pipeline-dotnet-sample
+  name: pipeline-dotnet-sample
+  namespace: dojo-stg
+spec:
+  to:
+    kind: Service
+    name: pipeline-dotnet-sample
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None

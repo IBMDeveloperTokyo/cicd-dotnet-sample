@@ -2,19 +2,23 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: dotnetapp
-  namespace: pl-stg
+  name: pipeline-dotnet-sample
+  namespace: dojo-stg
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dotnetapp
+      app: pipeline-dotnet-sample
   template:
+    metadata:
+      labels:
+        app: pipeline-dotnet-sample
+        deploymentconfig: pipeline-dotnet-sample
     spec:
       containers:
-        - name: dotnetapp
+        - name: pipeline-dotnet-sample
           image: >-
-            image-registry.openshift-image-registry.svc:5000/pltest1/dotnetapp@sha256:d926f6b39deff2659efa5a972b9bab65a952e471ed78d73a0c67210c3ec229b3
+            image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample@sha256:63048aaae447246a91821863194322704be01181bc370921f36f4b7576cceaa2
           ports:
             - containerPort: 8080
               protocol: TCP
