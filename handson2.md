@@ -1,6 +1,6 @@
 # OpenShift 初めてのPipeline ハンズオン その2
 
-ハンズオン その1 では、GitHubからソースコードを取得し、ビルド、デプロイまでをパイプラインを使って構築しました。
+[ハンズオン その1](./handson1.md) では、GitHubからソースコードを取得し、ビルド、デプロイまでをパイプラインを使って構築しました。
 
 ## 1. トリガーの設定と動作確認
 
@@ -114,7 +114,7 @@ OpenShiftのWebコンソールへ戻り、左側の[トポロジー]を確認す
 
 ### 2.2 テストタスクの作成
 
-GitHubの自分のリポジトリーを開き、GitHubの自分のリポジトリ画面から[tasks/dotnet-test.yml]ファイルを選択し、[Raw]をクリックします。
+GitHubの自分のリポジトリーを開き、GitHubの自分のリポジトリ画面から[tasks/dotnet-test.yml](./tasks/donet-test.yml)ファイルを選択し、[Raw]をクリックします。
 
 ブラウザ上に表示されているテキストをすべてクリップボードにコピーします。
 
@@ -205,7 +205,7 @@ dotnet-testタスクのパラメータ設定が表示されます。以下の通
 
 ### 3.1 ソースコードの修正
 
-GitHubの自分のリポジトリ画面に移動し、[SampleApp/Pages/Index.cshtml]ファイルを選択します。
+GitHubの自分のリポジトリ画面に移動し、[SampleApp/Pages/Index.cshtml](./SampleApp/Pages/Index.cshtml)ファイルを選択します。
 
 ![](./images/052.png)
 
