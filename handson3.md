@@ -32,7 +32,15 @@ OpenShift Pipelineのベースである Tekton は、[Tekton Hub](https://hub.te
 
 ### 1.3 メール送信タスクのインストール
 
-send mailの説明画面が表示されます。画面中央付近の[YAML]タブをクリックすると、タスクを定義するYAMLが表示されるので、これをすべてクリップボードにコピーしておきます。
+send mailの説明画面が表示されます。
+
+> 本章は、以下のコマンドで代替ができます。
+>
+> ```oc apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/sendmail/0.1/sendmail.yaml```
+>
+> もし oc コマンドの利用方法を理解されている方は、こちらもお試しください。
+
+画面中央付近の[YAML]タブをクリックすると、タスクを定義するYAMLが表示されるので、これをすべてクリップボードにコピーしておきます。
 
 ![](./images/3/003.png)
 
@@ -47,9 +55,6 @@ OpenShiftの画面に戻ります。左上のメニューにて、[Developer]か
 ![](./images/3/005.png)
 
 以上で、メール送信タスクが作成されました。
-
-> もし oc コマンドの利用方法を理解されている方は、この章の作業は以下のコマンドで代替できます。<br>
-> ```oc apply -f https://raw.githubusercontent.com/tektoncd/catalog/main/task/sendmail/0.1/sendmail.yaml```
 
 ## 2. gmail送信設定と動作確認
 
@@ -189,5 +194,7 @@ Task Results:
 メールの受信を確認できれば、本作業は完了です。
 
 ![](./images/3/015.png)
+
+各タスクの状況を把握できるメールが送信されているのが確認できましたでしょうか。
 
 以上で、本ハンズオンは終了となります。
