@@ -3,7 +3,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: pipeline-dotnet-sample
-  namespace: dojo-stg
+  namespace: dojo
 spec:
   replicas: 1
   selector:
@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: pipeline-dotnet-sample
-          image: >-
-            image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample@sha256:63048aaae447246a91821863194322704be01181bc370921f36f4b7576cceaa2
+          image: image-registry.openshift-image-registry.svc:5000/kawano1/pipeline-dotnet-sample
+            
           ports:
             - containerPort: 8080
               protocol: TCP

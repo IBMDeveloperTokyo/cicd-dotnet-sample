@@ -4,7 +4,7 @@ metadata:
   labels:
     app: pipeline-dotnet-sample
   name: pipeline-dotnet-sample
-  namespace: dojo-stg
+  namespace: dojo
 spec:
   to:
     kind: Service
