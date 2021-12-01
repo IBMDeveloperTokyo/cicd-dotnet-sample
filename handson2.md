@@ -116,7 +116,7 @@ OpenShiftのWebコンソールへ戻り、左側の[トポロジー]を確認す
 
 ### 2.2 テストタスクの作成
 
-GitHubの自分のリポジトリーを開き、GitHubの自分のリポジトリ画面から[tasks/dotnet-test.yml](./tasks/donet-test.yml)ファイルを選択し、[Raw]をクリックします。
+GitHubの自分のリポジトリーを開き、GitHubの自分のリポジトリ画面から[tasks/dotnet-test.yml](./tasks/dotnet-test.yml)ファイルを選択し、[Raw]をクリックします。
 
 ブラウザ上に表示されているテキストをすべてクリップボードにコピーします。
 
