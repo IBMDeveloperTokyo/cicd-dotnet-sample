@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
         - name: pipeline-dotnet-sample
-          image: image-registry.openshift-image-registry.svc:5000/kawano1/pipeline-dotnet-sample
-            
+          image: image-registry.openshift-image-registry.svc:5000/kawano1/pipeline-dotnet-sample-git@sha256:52ca2586bd4612ff557ab1b52ce120dc0aefeeac38f9a0c8ccfb9772b51f1236
           ports:
             - containerPort: 8080
               protocol: TCP
