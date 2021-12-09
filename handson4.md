@@ -91,6 +91,39 @@ ArgoCDの画面を表示することができました。
 
 ### 4.1 ArgoCDでのアプリセットアップ
 
+ArgoCDの画面に戻り、左上の[＋NEW APP]をクリックします。
+
+＊＊画像差し込み
+
+下記の通り、[GENERAL]の各項目に値を設定します。
+[Application Name]：「pipeline-dotnet-sample」
+[Project]：「default」
+[SYNC POLICY]：「Automatic」
+
+＊＊画像差し込み
+
+続いて、[SOURCE]の各項目に値を設定します。
+[Repository URL]：「X.XでForkしたリポジトリのURL」
+[Revision]：「HEAD」
+[Path]：「gitops」
+
+＊＊画像差し込み
+
+続いて、[DESTINATION]の各項目に値を設定します。
+[Cluster URL]：「https://kubernetes.default.svc」
+[Namespace]：「HEAD」
+
+＊＊画像差し込み
+
+最後に、[DIRECTORY]の[DIRECTORY RECURSE]にチェックを入れ、[CREATE]をクリックします。
+
+＊＊画像差し込み
+
+
+
+
+
+
 ### 4.2 GitHubとArgoCDの同期設定
 
 ## 5. CDの動作確認
