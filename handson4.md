@@ -96,21 +96,29 @@ ArgoCDの画面に戻り、左上の[＋NEW APP]をクリックします。
 ＊＊画像差し込み
 
 下記の通り、[GENERAL]の各項目に値を設定します。
+
 [Application Name]：「pipeline-dotnet-sample」
+
 [Project]：「default」
-[SYNC POLICY]：「Automatic」
+
+[SYNC POLICY]：「Manual」
 
 ＊＊画像差し込み
 
 続いて、[SOURCE]の各項目に値を設定します。
+
 [Repository URL]：「X.XでForkしたリポジトリのURL」
+
 [Revision]：「HEAD」
+
 [Path]：「gitops」
 
 ＊＊画像差し込み
 
 続いて、[DESTINATION]の各項目に値を設定します。
+
 [Cluster URL]：「https://kubernetes.default.svc」
+
 [Namespace]：「HEAD」
 
 ＊＊画像差し込み
@@ -119,11 +127,58 @@ ArgoCDの画面に戻り、左上の[＋NEW APP]をクリックします。
 
 ＊＊画像差し込み
 
+pipeline-dotnet-sample というアプリケーションが作成されていれば、ArgoCDでのアプリセットアップは完了です。
 
-
-
-
+＊＊画像差し込み
 
 ### 4.2 GitHubとArgoCDの同期設定
+
+作成したアプリケーションの[Status]を確認すると、[SYNC STATUS]が「OutOfSync」となっています。
+
+つまり、今はGitリポジトリと同期されていない（＝差分がある）状態なので、同期します。
+
+まず、アプリケーションの左下にある[SYNC]をクリックします。
+
+＊＊画像差し込み
+
+同期メニューが表示されるので、左上の[SYNCHRONIZE]をクリックすると、同期が始まります。
+
+＊＊画像差し込み
+
+[Status]の[SYNC STATUS]が「Synced」となれば、同期はできています。
+
+[Status]の[HEALTH STATUS]が「Healty」となれば、その同期処理は正常に行われ、アプリケーションがデプロイされています。
+
+＊＊画像差し込み
+
+デプロイ結果の確認のため、OpenShiftのWebコンソールへ戻ります。
+
+左上のメニューが[管理者]になっている方は、[管理者]から[Developer]に切り替えます。
+
+メニューから[トポロジー]をクリックし、中央上の[プロジェクト]を dojo に変更します。
+
+pipeline-dotnet-sample というデプロイメントが存在していれば成功です。
+
+＊＊画像差し込み
+
+今回は手動で同期を行いましたが、CD（継続的デプロイ）を行えるようにArgoCDの設定を変更します。
+
+ArgoCDの画面に戻り、アプリケーション pipeline-dotnet-sample をクリックします。
+
+アプリケーションの詳細が表示されるので、再度アプリケーション pipeline-dotnet-sample をクリックします。
+
+＊＊画像差し込み
+
+右上の[EDIT]をクリックします。
+
+＊＊画像差し込み
+
+[SUMMARY]タブの下部にある[ENABLE AUTO-SYNC]をクリックします。
+
+＊＊画像差し込み
+
+確認メッセージが表示されるので、[OK]をクリックします。
+
+以上で、CDのための準備ができました。
 
 ## 5. CDの動作確認
