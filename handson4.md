@@ -156,7 +156,7 @@ spec:
       name: GIT_REVISION
       type: string
     - default: >-
-        image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample-git
+        image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample # 末尾の'-git'を削除
       name: IMAGE_NAME
       type: string
     - default: SampleApp
