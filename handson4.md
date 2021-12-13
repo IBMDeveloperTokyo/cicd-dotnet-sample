@@ -241,43 +241,44 @@ spec:
 
 ArgoCDの画面に戻り、左上の[＋NEW APP]をクリックします。
 
-＊＊画像差し込み
+![](./images/4/024.png)
 
 下記の通り、[GENERAL]の各項目に値を設定します。
 
-[Application Name]：「pipeline-dotnet-sample」
+|項目|入力値|
+|--|--|
+|Application Name|dojo-gitops|
+|Project|default|
+|SYNC POLICY|Manual|
 
-[Project]：「default」
-
-[SYNC POLICY]：「Manual」
-
-＊＊画像差し込み
+![](./images/4/025.png)
 
 続いて、[SOURCE]の各項目に値を設定します。
 
-[Repository URL]：「X.XでForkしたリポジトリのURL」
+|項目|入力値|
+|--|--|
+|Repository URL|ご自身のGitHubリポジトリURL|
+|Revision|main|
+|Path|gitops|
 
-[Revision]：「HEAD」
-
-[Path]：「gitops」
-
-＊＊画像差し込み
+![](./images/4/026.png)
 
 続いて、[DESTINATION]の各項目に値を設定します。
 
-[Cluster URL]：「https://kubernetes.default.svc」
+|項目|入力値|
+|--|--|
+|Cluster URL|https://kubernetes.default.svc|
+|Namespace|dojo|
 
-[Namespace]：「HEAD」
-
-＊＊画像差し込み
+![](./images/4/027.png)
 
 最後に、[DIRECTORY]の[DIRECTORY RECURSE]にチェックを入れ、[CREATE]をクリックします。
 
-＊＊画像差し込み
+![](./images/4/028.png)
 
 pipeline-dotnet-sample というアプリケーションが作成されていれば、ArgoCDでのアプリセットアップは完了です。
 
-＊＊画像差し込み
+![](./images/4/029.png)
 
 ### 4.2 GitHubとArgoCDの同期設定
 
@@ -287,17 +288,17 @@ pipeline-dotnet-sample というアプリケーションが作成されていれ
 
 まず、アプリケーションの左下にある[SYNC]をクリックします。
 
-＊＊画像差し込み
+![](./images/4/030.png)
 
 同期メニューが表示されるので、左上の[SYNCHRONIZE]をクリックすると、同期が始まります。
 
-＊＊画像差し込み
+![](./images/4/031.png)
 
 [Status]の[SYNC STATUS]が「Synced」となれば、同期はできています。
 
 [Status]の[HEALTH STATUS]が「Healty」となれば、その同期処理は正常に行われ、アプリケーションがデプロイされています。
 
-＊＊画像差し込み
+![](./images/4/032.png)
 
 デプロイ結果の確認のため、OpenShiftのWebコンソールへ戻ります。
 
@@ -307,23 +308,19 @@ pipeline-dotnet-sample というアプリケーションが作成されていれ
 
 pipeline-dotnet-sample というデプロイメントが存在していれば成功です。
 
-＊＊画像差し込み
+![](./images/4/033.png)
 
 今回は手動で同期を行いましたが、CD（継続的デプロイ）を行えるようにArgoCDの設定を変更します。
 
-ArgoCDの画面に戻り、アプリケーション pipeline-dotnet-sample をクリックします。
+ArgoCDの画面に戻り、アプリケーション dojo-gitops をクリックします。
 
-アプリケーションの詳細が表示されるので、再度アプリケーション pipeline-dotnet-sample をクリックします。
+アプリケーションの関連が表示されるので、左上にある[APP DETAILS]をクリックします。
 
-＊＊画像差し込み
-
-右上の[EDIT]をクリックします。
-
-＊＊画像差し込み
+![](./images/4/034.png)
 
 [SUMMARY]タブの下部にある[ENABLE AUTO-SYNC]をクリックします。
 
-＊＊画像差し込み
+![](./images/4/035.png)
 
 確認メッセージが表示されるので、[OK]をクリックします。
 
