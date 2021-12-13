@@ -77,15 +77,160 @@ ArgoCDの画面を表示することができました。
 
 (以降作成中)
 
-## 3. 開発・検証環境用のアプリケーションのデプロイ
+## 3. 開発環境用アプリケーションのデプロイ
 
-### 3.1 S2Iを使ってデプロイ
+### 3.1 開発環境の作成
 
-開発・検証環境でCIを行う
+管理者に切り替え、プロジェクトを作成します。
+名前には`dojo`を入力してください。
 
-### 3.2 コンテナイメージのコピー
+***画像差し込み***
 
-検証環境のコンテナイメージをベースに本番環境のコンテナイメージを作成する
+Developerに切り替えて、デプロイをします。
+
+[このリポジトリ](https://github.com/tty-kwn/pipeline-dotnet-sample)を自身のリポジトリにForkします。
+
+***画像差し込み***
+
+Forkができたら、featureブランチ`feature_dojo`を作成します。
+
+***画像差し込み***
+
+OpenShiftの画面に戻り、Developerに切り替えます。
+
+ここからはS2Iの手順と同じ
+> 注意:パイプラインにチェックを入れる
+
+***画像差し込み***
+
+デプロイが始まったら、[パイプライン]→`pipeline-dotnet-sample-git`のリンクをクリックします。
+
+***画像差し込み***
+
+YAMLタブをクリックし、表示されているYAMLを全てコピーしたらパンくずリストの`パイプライン`をクリックします。
+
+***画像差し込み***
+
+パイプラインの作成をクリックします。
+
+***画像差し込み***
+
+パイプラインビルダーが表示されたら、YAMLビューを選択します。
+
+***画像差し込み***
+
+表示されているYAMLを全て削除して、先ほどコピーしたYAMLをペーストします。
+**このパイプラインは、本番環境用に使用します。**
+
+***画像差し込み***
+
+パラメータを開発用から本番用に書き換えます。
+まずは不要な部分を削除します。
+
+***画像差し込み***
+
+その後、本番環境用のパラメータに変更します。
+
+```yaml
+・
+・
+・
+metadata:
+  labels:
+    app.kubernetes.io/instance: pipeline-dotnet-sample # 末尾の'-git'を削除
+    app.kubernetes.io/name: pipeline-dotnet-sample # 末尾の'-git'を削除
+    pipeline.openshift.io/runtime: dotnet
+    pipeline.openshift.io/runtime-version: 5.0-ubi8
+    pipeline.openshift.io/type: kubernetes
+  name: pipeline-dotnet-sample # 末尾の'-git'を削除
+  namespace: dojo
+spec:
+  params:
+    - default: pipeline-dotnet-sample # 末尾の'-git'を削除
+      name: APP_NAME
+      type: string
+    - default: 'https://github.com/shu-adachi/pipeline-dotnet-sample.git' # ご自身のGitHubアカウントのリポジトリであればOKです
+      name: GIT_REPO
+      type: string
+    - default: main # 'feature_dojo'→'main'に変更
+      name: GIT_REVISION
+      type: string
+    - default: >-
+        image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample-git
+      name: IMAGE_NAME
+      type: string
+    - default: SampleApp
+      name: PATH_CONTEXT
+      type: string
+    - default: 5.0-ubi8
+      name: VERSION
+      type: string
+・
+・
+・
+```
+
+### 3.2 本番環境の作成
+
+管理者に切り替え、[ストレージ]の中から[永続ボリューム要求]を選択し、[永続ボリューム要求の作成]をクリックします。
+
+|パラメータ名|設定値|
+|:--|:--|
+|永続ボリューム要求の名前|dojo|
+|サイズ|1〜20|
+
+[作成]をクリックします。
+
+Developerに切り替えて、3.1で作成したパイプラインのYAMLをコピー
+パンクズリストのパイプラインをクリックし、[パイプライン作成]をクリック
+
+YAMLビューに切り替えてコピーしたYAMLをペースト
+
+パラメータを編集して[作成]
+
+アクションから、トリガーの追加を選択します。
+
+|パラメータ名|設定値|
+|:--|:--|
+|Git プロバイダータイプ|github-push|
+|workspace|永続ボリューム要求→dojo|
+
+トリガーテンプレートのURLをコピーし、自身のGitHubリポジトリに戻ります。
+
+Setting→Webhooks→Add webhook
+
+|パラメータ名|設定値|
+|:--|:--|
+|Payload URL|コピーしたトリガーのURL|
+|Content Type|application/json|
+
+[Add webhook]をクリック
+
+画面を更新して、緑のチェックマークになっていることを確認してください。
+
+トリガーの動作確認をします。
+
+mainブランチの/SampleApp/Pages/Index.cshtmlに移動し、cshtmlファイルを編集します。
+
+```html
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Sample page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>This application is sample for Tech Dojo - OpenShift Pipeline/GitOps</p>
+    <p>トリガー動作確認</p>
+</div>
+```
+
+Commit Changesをクリックします。
+
+OpenShiftのパイプライン画面にて、`pipeline-dotnet-sample`が実行されていることを確認します。
+
+このパイプラインでは、デプロイまではせず、イメージレジストリへのPUSHまでを行うので、アプリケーションは更新されていないことを確認します。
 
 ## 4. 本番環境用アプリケーションのデプロイ
 
@@ -182,3 +327,85 @@ ArgoCDの画面に戻り、アプリケーション pipeline-dotnet-sample を�
 以上で、CDのための準備ができました。
 
 ## 5. CDの動作確認
+
+GitHubのindex.cshtmlを更新します。
+
+パイプラインの実行が完了したことを確認したら、マニフェストを更新します。
+
+管理者に切り替え、[ビルド]→[イメージストリームタグ]→pipeline-dotnet-sampleのリンクをクリックします。
+
+YAMLタブをクリックし、dockerImageReferenceに記載されているパラメータをコピーします。
+
+```yaml
+・
+・
+・
+status:
+  dockerImageRepository: >-
+    image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample-git
+  tags:
+    - tag: latest
+      items:
+        - created: '2021-12-13T04:06:19Z'
+          dockerImageReference: >-
+            image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample-git@sha256:b772388d10663da969444edafde6a980ef7eee2e97bd50423a45eb110a2261d9
+          image: >-
+            sha256:b772388d10663da969444edafde6a980ef7eee2e97bd50423a45eb110a2261d9
+          generation: 1
+・
+・
+・
+```
+
+GitHubリポジトリに移動し、mainリポジトリの/gitops/dotnet-sample-deployment.yamlを編集します。
+
+```yaml
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: pipeline-dotnet-sample
+  namespace: dojo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pipeline-dotnet-sample
+  template:
+    metadata:
+      labels:
+        app: pipeline-dotnet-sample
+        deploymentconfig: pipeline-dotnet-sample
+    spec:
+      containers:
+        - name: pipeline-dotnet-sample
+          image: # ここにペースト
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+      imagePullSecrets: []
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+  paused: false
+```
+
+パイプラインが実行されますが、気にせず放置しArgoCDの同期を待ちます。
+
+ArgoCDの同期が完了したらアプリケーションを確認します。
+
+アプリケーションが更新されていることが確認できました。
+以上で、CDの確認は完了です。
