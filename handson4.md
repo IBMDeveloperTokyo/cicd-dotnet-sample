@@ -79,57 +79,97 @@ ArgoCDの画面を表示することができました。
 
 ## 3. 開発環境用アプリケーションのデプロイ
 
-### 3.1 開発環境の作成
+### 3.1 ソースコードのFork
 
-管理者に切り替え、プロジェクトを作成します。
-名前には`dojo`を入力してください。
+GitHubにサインイン(Sign in)してください。まだアカウント登録されていない方は[こちら](https://github.com/)からサインアップ(Sign up)してください。
+![](./images/010.png)
 
-***画像差し込み***
+ブラウザーで[https://github.com/tty-kwn/pipeline-dotnet-sample](https://github.com/tty-kwn/pipeline-dotnet-sample)を開いてください。
 
-Developerに切り替えて、デプロイをします。
+[Fork]ボタンをクリックして、自分のアカウントを選択してください。
+![](./images/011.png)
 
-[このリポジトリ](https://github.com/tty-kwn/pipeline-dotnet-sample)を自身のリポジトリにForkします。
+Forkする際に指定した自分のリポジトリーへ、対象のプロジェクトがForkされたことを確認します。
+リポジトリーのパスの最初の部分が自分のGitHubアカウントになっていればOKです。
+![](./images/012.png)
 
-***画像差し込み***
+Forkができたら、featureブランチ「feature_dojo」を作成します。
+![](./images/4/012.png)
 
-Forkができたら、featureブランチ`feature_dojo`を作成します。
+### 3.2 開発環境の作成
 
-***画像差し込み***
+OpenShiftのWebコンソールへ戻り、[Developer]から[管理者]に切り替えてプロジェクトを作成します。
+![](./images/4/011.png)
 
-OpenShiftの画面に戻り、Developerに切り替えます。
+[管理者]から[Developer]に切り替えて、[+追加]をクリック、[ソース:Git]をクリックしてください。
+![](./images/018.png)
 
-ここからはS2Iの手順と同じ
-> 注意:パイプラインにチェックを入れる
+自分のGitHubリポジトリーのURLを[GitリポジトリーURL]に入力します。
 
-***画像差し込み***
+下の[詳細のGitオプションの表示]をクリックすると入力エリアが展開されます。
 
-デプロイが始まったら、[パイプライン]→`pipeline-dotnet-sample-git`のリンクをクリックします。
+今回デプロイする対象のアプリケーションは GitHubリポジトリー の「feature_dojo」ブランチ及び「SampleApp」ディレクトリ配下のため、以下の通り入力します。
 
-***画像差し込み***
+| 項目 | 入力値 | 説明 |
+| ---- | ---- | ---- |
+| [Gitリファレンス] | feature_dojo | ブランチ名 |
+| [コンテキストディレクトリー] | /SampleApp | アプリケーションディレクトリ |
 
-YAMLタブをクリックし、表示されているYAMLを全てコピーしたらパンくずリストの`パイプライン`をクリックします。
+![](./images/4/013.png)
 
-***画像差し込み***
+言語やタイプの一覧がタイルで表示され、.NETが選択されていることを確認します。
+![](./images/020.png)
 
-パイプラインの作成をクリックします。
+[パイプラインの追加]をチェックします。これにより、ビルドとデプロイをOpenShift Pipelineを用いて行うようにできます。
 
-***画像差し込み***
+チェックしたら最下段の[作成]ボタンをクリックしてください。（他のオプションはすべてデフォルトで構いません)
+![](./images/021.png)
 
-パイプラインビルダーが表示されたら、YAMLビューを選択します。
+デプロイが始まったら、開発環境の準備は完了です。
 
-***画像差し込み***
+### 3.2 本番環境の作成
 
-表示されているYAMLを全て削除して、先ほどコピーしたYAMLをペーストします。
-**このパイプラインは、本番環境用に使用します。**
+開発環境に作成されたパイプラインをベースに、本番環境用のパイプラインを作成します。
 
-***画像差し込み***
+#### 3.2.1 パイプラインで使用する永続ボリュームの作成
 
-パラメータを開発用から本番用に書き換えます。
-まずは不要な部分を削除します。
+[Developer]から[管理者]に切り替えて、[ストレージ]の中から[永続ボリューム要求]を選択し、[永続ボリューム要求の作成]をクリックします。
+![](./images/4/014.png)
 
-***画像差し込み***
+本番用のパイプラインで使用する永続ボリュームを作成します。
+以下の通り入力し、[作成]をクリックします。
+|項目|入力値|備考|
+|--|--|--|
+|永続ボリューム要求の名前|dojo||
+|サイズ|1|20以下の数値を指定した場合、自動で20GiBのボリュームが作成されます。|
+![](./images/4/015.png)
 
-その後、本番環境用のパラメータに変更します。
+#### 3.2.2 本番環境のパイプラインの作成
+
+[パイプライン]をクリックし、**pipeline-dotnet-sample-git** のリンクをクリックします。
+![](./images/4/016.png)
+
+パイプラインの詳細が表示されたら、[YAML]タブをクリックし、表示されているYAMLを全てコピーして、左上のパンくずリストの **パイプライン** をクリックします。
+![](./images/4/017.png)
+
+[パイプラインの作成]をクリックします。
+![](./images/4/018.png)
+
+パイプラインビルダーが表示されたら、YAMLビューを選択し、先ほどコピーしたパイプラインのYAMLで上書きします。
+![](./images/4/019.png)
+
+開発用から本番用に書き換えるため、まずは不要なパラメータを削除します。
+削除するパラメータは以下の5ヶ所です。
+`metadata.creationTimestamp`
+`metadate.generation`
+`metadata.managedFields`
+`metadata.resourceVersion`
+`metadata.uid`
+`spec.params.name` (deployの部分のみ)
+![](./images/4/020.png)
+
+削除が完了したら、本番環境用のパラメータに変更します。
+`# コメント`がある部分を変更してください。
 
 ```yaml
 ・
@@ -149,10 +189,10 @@ spec:
     - default: pipeline-dotnet-sample # 末尾の'-git'を削除
       name: APP_NAME
       type: string
-    - default: 'https://github.com/shu-adachi/pipeline-dotnet-sample.git' # ご自身のGitHubアカウントのリポジトリであればOKです
+    - default: 'https://github.com/ご自身のGitHubアカウント/pipeline-dotnet-sample.git'
       name: GIT_REPO
       type: string
-    - default: main # 'feature_dojo'→'main'に変更
+    - default: main # 'feature_dojo'を'main'に変更
       name: GIT_REVISION
       type: string
     - default: >-
@@ -170,67 +210,30 @@ spec:
 ・
 ```
 
-### 3.2 本番環境の作成
+変更が完了したら、[作成]をクリックします。
 
-管理者に切り替え、[ストレージ]の中から[永続ボリューム要求]を選択し、[永続ボリューム要求の作成]をクリックします。
+パイプラインの詳細画面が表示されたら、右上の[アクション]から[トリガーの追加]を選択します。
+![](./images/4/021.png)
 
-|パラメータ名|設定値|
-|:--|:--|
-|永続ボリューム要求の名前|dojo|
-|サイズ|1〜20|
+トリガーの追加 画面が開いたら、[Gitプロバイダータイプ]に **github-push** を選択、[workspace]に **永続ボリューム要求 → dojo** を選択して [追加]ボタンをクリックしてください。
+![](./images/4/022.png)
 
-[作成]をクリックします。
+トリガーテンプレートのURLをクリップボードにコピーし、自身のGitHubリポジトリに戻ります。
+![](./images/4/023.png)
 
-Developerに切り替えて、3.1で作成したパイプラインのYAMLをコピー
-パンクズリストのパイプラインをクリックし、[パイプライン作成]をクリック
+[Settings] -> [Webhooks] -> [Add webhook]を選択します。
+![](./images/032.png)
 
-YAMLビューに切り替えてコピーしたYAMLをペースト
+先ほどクリップボードにコピーしたトリガーURLを[Payload URL]に貼り付けてください。[Control type]は[application/json]を選択してください。
+![](./images/033.png)
 
-パラメータを編集して[作成]
+入力後、[Add webhook]を選択します。
+以下の図の様に緑のチェックマークが付いたら設定成功です。
+すぐにチェックマークが表示されないので、ページを再読み込みしてください。
+![](./images/034.png)
 
-アクションから、トリガーの追加を選択します。
-
-|パラメータ名|設定値|
-|:--|:--|
-|Git プロバイダータイプ|github-push|
-|workspace|永続ボリューム要求→dojo|
-
-トリガーテンプレートのURLをコピーし、自身のGitHubリポジトリに戻ります。
-
-Setting→Webhooks→Add webhook
-
-|パラメータ名|設定値|
-|:--|:--|
-|Payload URL|コピーしたトリガーのURL|
-|Content Type|application/json|
-
-[Add webhook]をクリック
-
-画面を更新して、緑のチェックマークになっていることを確認してください。
-
-トリガーの動作確認をします。
-
-mainブランチの/SampleApp/Pages/Index.cshtmlに移動し、cshtmlファイルを編集します。
-
-```html
-@page
-@model IndexModel
-@{
-    ViewData["Title"] = "Sample page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>This application is sample for Tech Dojo - OpenShift Pipeline/GitOps</p>
-    <p>トリガー動作確認</p>
-</div>
-```
-
-Commit Changesをクリックします。
-
-OpenShiftのパイプライン画面にて、`pipeline-dotnet-sample`が実行されていることを確認します。
-
-このパイプラインでは、デプロイまではせず、イメージレジストリへのPUSHまでを行うので、アプリケーションは更新されていないことを確認します。
+これでwebhookの設定は完了です。
+後はソースコードの修正で自動的にビルドが開始されますが、このパイプラインでは イメージレジストリへのPUSH までを行うので、アプリケーションはデプロイされません。
 
 ## 4. 本番環境用アプリケーションのデプロイ
 
