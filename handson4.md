@@ -14,7 +14,7 @@ OpenShift GitOpsについて、ごく簡単にご説明します。
 
 #### 1.1.1 Operatorの検索
 
-OpenShiftの画面に戻ります。左上のメニューにて、[Developer]から[管理者]に切り替えます。
+左上のメニューにて、[Developer]から[管理者]に切り替えます。
 
 [OperatorHub]ボタンをクリックします。
 
@@ -46,7 +46,7 @@ Red Hat OpenShift Pipelines 画面にて[インストール]をクリックし�
 
 #### 1.2.1 Operatorの検索
 
-OpenShiftのWebコンソールへ戻り、[OperatorHub]ボタンをクリックします。
+[OperatorHub]ボタンをクリックします。
 
 インストール可能なOperatorがタイル表示されています。
 
@@ -56,7 +56,7 @@ OpenShiftのWebコンソールへ戻り、[OperatorHub]ボタンをクリック�
 
 #### 1.2.2 Operatorのインストール
 
-Red Hat OpenShift Pipelines 画面にて[インストール]をクリックします。
+Red Hat OpenShift GitOps 画面にて[インストール]をクリックします。
 
 ![](./images/4/002.png)
 
