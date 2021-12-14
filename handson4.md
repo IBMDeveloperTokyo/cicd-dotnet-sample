@@ -236,7 +236,8 @@ spec:
 これでwebhookの設定は完了です。
 後はmainブランチが変更されたら自動的にビルドが開始されますが、このパイプラインでは イメージレジストリへのPUSH までを行うので、アプリケーションはデプロイされません。
 
-試しに、[/SampleApp/Pages/Index.cshtml](/SampleApp/Pages/Index.cshtml)を以下の通り修正してください。
+試しに、ご自身のmainブランチの [/SampleApp/Pages/Index.cshtml](/SampleApp/Pages/Index.cshtml) を右上にある Editボタン から直接変更し、画面下部の [Commit changes]を押してください。
+> 本来であれば feature_dojoブランチ で変更し、問題ないことを確認した後に mainブランチ へマージする流れとなります。
 
 ```html
 @page
@@ -248,11 +249,9 @@ spec:
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>This application is sample for Tech Dojo - OpenShift Pipeline/GitOps</p>
-    <p>mainブランチのトリガー動作確認</p>
+    <p>mainブランチのトリガー動作確認</p> <!-- この行を追加 -->
 </div>
 ```
-
-***画像さしこみ***
 
 ## 4. 本番環境用アプリケーションのデプロイ
 
@@ -347,36 +346,36 @@ ArgoCDの画面に戻り、アプリケーション dojo-gitops をクリック�
 
 ## 5. CDの動作確認
 
-GitHubのindex.cshtmlを更新します。
+再度、ご自身のmainブランチの [/SampleApp/Pages/Index.cshtml](/SampleApp/Pages/Index.cshtml) を更新します。
+右上にある Editボタン から直接変更し、画面下部の [Commit changes]を押してください。
+> 本来であれば feature_dojoブランチ で変更し、問題ないことを確認した後に mainブランチ へマージする流れとなります。
 
-パイプラインの実行が完了したことを確認したら、マニフェストを更新します。
+```html
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Sample page";
+}
 
-管理者に切り替え、[ビルド]→[イメージストリームタグ]→pipeline-dotnet-sampleのリンクをクリックします。
-
-YAMLタブをクリックし、dockerImageReferenceに記載されているパラメータをコピーします。
-
-```yaml
-・
-・
-・
-status:
-  dockerImageRepository: >-
-    image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample-git
-  tags:
-    - tag: latest
-      items:
-        - created: '2021-12-13T04:06:19Z'
-          dockerImageReference: >-
-            image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample-git@sha256:b772388d10663da969444edafde6a980ef7eee2e97bd50423a45eb110a2261d9
-          image: >-
-            sha256:b772388d10663da969444edafde6a980ef7eee2e97bd50423a45eb110a2261d9
-          generation: 1
-・
-・
-・
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>This application is sample for Tech Dojo - OpenShift Pipeline/GitOps</p>
+    <p>mainブランチのトリガー動作確認</p>
+    <p>ArgoCDの自動デプロイ動作確認</p> <!-- この行を追加 -->
+</div>
 ```
 
-GitHubリポジトリに移動し、mainリポジトリの/gitops/dotnet-sample-deployment.yamlを編集します。
+OpenShiftの画面に戻り、[Developer]から[管理者]に切り替えて、[パイプライン]をクリックし、**pipeline-dotnet-sample-git** のパイプラインの実行が完了待ちます。
+![](./images/4/036.png)
+
+パイプラインの完了を確認したら、[ビルド] > [イメージストリームタグ] > **pipeline-dotnet-sample** のリンクをクリックします。
+
+イメージストリームの詳細画面が表示されたら、YAMLタブをクリックし、dockerImageReferenceに記載されているパラメータをコピーします。
+> 複数存在しますが、先頭のものが一番最新のイメージとなるので、2つ目以降の値は使用しないでください。
+![](./images/4/037.png)
+
+GitHubリポジトリに移動し、**mainリポジトリ** の [/gitops/dotnet-sample-deployment.yaml](/gitops/dotnet-sample-deployment.yaml)  を更新します。
+右上にある Editボタン から直接変更し、画面下部の [Commit changes]を押してください。
 
 ```yaml
 ---
@@ -398,33 +397,20 @@ spec:
     spec:
       containers:
         - name: pipeline-dotnet-sample
-          image: # ここにペースト
-          ports:
-            - containerPort: 8080
-              protocol: TCP
-          resources: {}
-          terminationMessagePath: /dev/termination-log
-          terminationMessagePolicy: File
-          imagePullPolicy: Always
-      restartPolicy: Always
-      terminationGracePeriodSeconds: 30
-      dnsPolicy: ClusterFirst
-      securityContext: {}
-      schedulerName: default-scheduler
-      imagePullSecrets: []
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-  revisionHistoryLimit: 10
-  progressDeadlineSeconds: 600
-  paused: false
+          image: # ここに先ほどコピーしたコンテナイメージをペースト　(image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample@sha256:xxx...)
+・
+・
+・
 ```
 
-パイプラインが実行されますが、気にせず放置しArgoCDの同期を待ちます。
+更新ができたらArgoCDの画面に移動し、同期が開始・完了することを確認します。
+> 3分周期で同期をしているので少し時間がかかる可能性があります。
+![](./images/4/038.png)
 
 ArgoCDの同期が完了したらアプリケーションを確認します。
+OpenShiftの画面に戻り、[管理者]から[Developer]に切り替えて、[トポロジー]をクリックして　**pipeline-dotnet-sample**　のルートからアプリケーションを開きます。
+![](./images/4/039.png)
 
-アプリケーションが更新されていることが確認できました。
-以上で、CDの確認は完了です。
+アプリケーションが更新されていることが確認できましたでしょうか。
+
+以上で、本ハンズオンは終了となります。
