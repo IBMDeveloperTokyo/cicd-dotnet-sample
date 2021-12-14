@@ -397,7 +397,7 @@ ArgoCDの画面に戻り、アプリケーション dojo-gitops をクリック�
 </div>
 ```
 
-OpenShiftの画面に戻り、[Developer]から[管理者]に切り替えて、[パイプライン]をクリックし、**pipeline-dotnet-sample-git** のパイプラインの実行が完了待ちます。
+OpenShiftの画面に戻り、[Developer]から[管理者]に切り替えて、[パイプライン]をクリックし、**pipeline-dotnet-sample-git** の完了を待ちます。
 ![](./images/4/036.png)
 
 パイプラインの完了を確認したら、[ビルド] > [イメージストリームタグ] > **pipeline-dotnet-sample** のリンクをクリックします。
