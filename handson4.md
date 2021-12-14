@@ -4,11 +4,47 @@
 
 OpenShift GitOpsについて、ごく簡単にご説明します。
 
-## 1. Red Hat OpenShift Pipelinesのインストール
+## 1. Operatorのインストール
+
+本ハンズオンに必要なOperatorをインストールします。
+
+### 1.1 Red Hat OpenShift Pipelinesのインストール
+
+ここからは、OpenShiftにOpenShift Pipelinesをインストールします。
+
+#### 1.1.1 Operatorの検索
+
+OpenShiftの画面に戻ります。左上のメニューにて、[Developer]から[管理者]に切り替えます。
+
+[OperatorHub]ボタンをクリックします。
+
+インストール可能なOperatorがタイル表示されています。
+
+[Filter by keyword..]に「OpenShift Pipelines」と入力し、Red Hat OpenShift Pipelinesを選択します。
+
+![](./images/013.png)
+
+#### 1.1.2 Operatorのインストール
+
+Red Hat OpenShift Pipelines 画面にて[インストール]をクリックします。
+
+![](./images/014.png)
+
+続けて Operatorのインストール 画面にて、すべてデフォルトのままで、[インストール]をクリックします。
+
+![](./images/015.png)
+
+インストール完了のダイアログが表示されたあと、1分程度待つと画面左側メニューに[パイプライン]という項目が追加されます。
+
+もししばらく待っても追加されない場合は画面のリロードを試してください。
+
+![](./images/016.png)
+
+### 1.2 Red Hat OpenShift GitOpsのインストール
 
 ここからは、OpenShiftにOpenShift GitOpsをインストールします。
 
-### 1.1 Operatorの検索
+#### 1.2.1 Operatorの検索
 
 OpenShiftのWebコンソールへ戻り、[OperatorHub]ボタンをクリックします。
 
@@ -18,7 +54,7 @@ OpenShiftのWebコンソールへ戻り、[OperatorHub]ボタンをクリック�
 
 ![](./images/4/001.png)
 
-### 1.2 Operatorのインストール
+#### 1.2.2 Operatorのインストール
 
 Red Hat OpenShift Pipelines 画面にて[インストール]をクリックします。
 
