@@ -372,6 +372,7 @@ OpenShiftの画面に戻り、[Developer]から[管理者]に切り替えて、[
 
 イメージストリームの詳細画面が表示されたら、YAMLタブをクリックし、dockerImageReferenceに記載されているパラメータをコピーします。
 > 複数存在しますが、先頭のものが一番最新のイメージとなるので、2つ目以降の値は使用しないでください。
+
 ![](./images/4/037.png)
 
 GitHubリポジトリに移動し、**mainリポジトリ** の [/gitops/dotnet-sample-deployment.yaml](/gitops/dotnet-sample-deployment.yaml)  を更新します。
@@ -405,6 +406,7 @@ spec:
 
 更新ができたらArgoCDの画面に移動し、同期が開始・完了することを確認します。
 > 3分周期で同期をしているので少し時間がかかる可能性があります。
+
 ![](./images/4/038.png)
 
 ArgoCDの同期が完了したらアプリケーションを確認します。
