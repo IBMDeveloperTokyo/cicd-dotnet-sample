@@ -233,7 +233,25 @@ spec:
 ![](./images/034.png)
 
 これでwebhookの設定は完了です。
-後はソースコードの修正で自動的にビルドが開始されますが、このパイプラインでは イメージレジストリへのPUSH までを行うので、アプリケーションはデプロイされません。
+後はmainブランチが変更されたら自動的にビルドが開始されますが、このパイプラインでは イメージレジストリへのPUSH までを行うので、アプリケーションはデプロイされません。
+
+試しに、[/SampleApp/Pages/Index.cshtml](/SampleApp/Pages/Index.cshtml)を以下の通り修正してください。
+
+```html
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Sample page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>This application is sample for Tech Dojo - OpenShift Pipeline/GitOps</p>
+    <p>mainブランチのトリガー動作確認</p>
+</div>
+```
+
+***画像さしこみ***
 
 ## 4. 本番環境用アプリケーションのデプロイ
 
