@@ -82,7 +82,7 @@ Red Hat OpenShift GitOps 画面にて[インストール]をクリックしま�
 
 左下の[シークレット]をクリックし、中央上の[プロジェクト]を openshift-gitops に変更します。
 
-(s) openshift-gitops-operator という項目リンクをクリックします。
+(s) openshift-gitops-cluster という項目リンクをクリックします。
 
 ![](./images/4/006.png)
 
