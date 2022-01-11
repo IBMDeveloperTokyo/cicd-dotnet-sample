@@ -29,7 +29,7 @@ IBM CloudライトアカウントおよびGitHubアカウントの作成、OpenS
   1. シークレットの作成
   1. GMail送信設定と動作確認
   1. パイプラインへの組み込みと動作確認
-* [(未完) ハンズオン その4](./handson4.md)
+* [ハンズオン その4](./handson4.md)
   1. OpenShift GitOpsインストール
   1. ArgoCDへのアプリ設定とデプロイ実行
   1. OpenShift Pipelines/GitOps連携
