@@ -2,13 +2,13 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   labels:
-    app: pipeline-dotnet-sample
-  name: pipeline-dotnet-sample
+    app: cicd-dotnet-sample
+  name: cicd-dotnet-sample
   namespace: dojo
 spec:
   to:
     kind: Service
-    name: pipeline-dotnet-sample
+    name: cicd-dotnet-sample
     weight: 100
   port:
     targetPort: 8080-tcp
