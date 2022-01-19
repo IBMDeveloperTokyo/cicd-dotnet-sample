@@ -2,22 +2,22 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: pipeline-dotnet-sample
+  name: cicd-dotnet-sample
   namespace: dojo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pipeline-dotnet-sample
+      app: cicd-dotnet-sample
   template:
     metadata:
       labels:
-        app: pipeline-dotnet-sample
-        deploymentconfig: pipeline-dotnet-sample
+        app: cicd-dotnet-sample
+        deploymentconfig: cicd-dotnet-sample
     spec:
       containers:
-        - name: pipeline-dotnet-sample
-          image: image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample
+        - name: cicd-dotnet-sample
+          image: image-registry.openshift-image-registry.svc:5000/dojo/cicd-dotnet-sample
           ports:
             - containerPort: 8080
               protocol: TCP
