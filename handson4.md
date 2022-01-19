@@ -116,7 +116,7 @@ ArgoCDの画面を表示することができました。
 GitHubにサインイン(Sign in)してください。まだアカウント登録されていない方は[こちら](https://github.com/)からサインアップ(Sign up)してください。
 ![](./images/010.png)
 
-ブラウザーで[https://github.com/tty-kwn/pipeline-dotnet-sample](https://github.com/tty-kwn/pipeline-dotnet-sample)を開いてください。
+ブラウザーで[https://github.com/IBMDeveloperTokyo/cicd-dotnet-sample](https://github.com/IBMDeveloperTokyo/cicd-dotnet-sample)を開いてください。
 
 [Fork]ボタンをクリックして、自分のアカウントを選択してください。
 ![](./images/011.png)
