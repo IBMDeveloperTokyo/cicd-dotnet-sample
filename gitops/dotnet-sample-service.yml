@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: pipeline-dotnet-sample
+  name: cicd-dotnet-sample
   namespace: dojo
 spec:
   ports:
@@ -10,8 +10,8 @@ spec:
       port: 8080
       targetPort: 8080
   selector:
-    app: pipeline-dotnet-sample
-    deploymentconfig: pipeline-dotnet-sample
+    app: cicd-dotnet-sample
+    deploymentconfig: cicd-dotnet-sample
   type: ClusterIP
   sessionAffinity: None
   ipFamilies:
