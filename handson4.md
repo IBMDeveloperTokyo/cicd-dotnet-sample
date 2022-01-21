@@ -327,7 +327,7 @@ ArgoCDの画面に戻り、左上の[＋NEW APP]をクリックします。
 
 ![](./images/4/028.png)
 
-pipeline-dotnet-sample というアプリケーションが作成されていれば、ArgoCDでのアプリセットアップは完了です。
+dojo-gitops というアプリケーションが作成されていれば、ArgoCDでのアプリセットアップは完了です。
 
 ![](./images/4/029.png)
 
@@ -357,7 +357,7 @@ pipeline-dotnet-sample というアプリケーションが作成されていれ
 
 メニューから[トポロジー]をクリックし、中央上の[プロジェクト]を dojo に変更します。
 
-pipeline-dotnet-sample というデプロイメントが存在していれば成功です。
+cicd-dotnet-sample というデプロイメントが存在していれば成功です。
 
 ![](./images/4/033.png)
 
@@ -416,22 +416,22 @@ GitHubリポジトリに移動し、**mainリポジトリ** の [/gitops/dotnet-
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: pipeline-dotnet-sample
+  name: cicd-dotnet-sample
   namespace: dojo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pipeline-dotnet-sample
+      app: cicd-dotnet-sample
   template:
     metadata:
       labels:
-        app: pipeline-dotnet-sample
-        deploymentconfig: pipeline-dotnet-sample
+        app: cicd-dotnet-sample
+        deploymentconfig: cicd-dotnet-sample
     spec:
       containers:
-        - name: pipeline-dotnet-sample
-          image: # ここに先ほどコピーしたコンテナイメージをペースト　(image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample@sha256:xxx...)
+        - name: cicd-dotnet-sample
+          image: # ここに先ほどコピーしたコンテナイメージをペースト　(image-registry.openshift-image-registry.svc:5000/dojo/cicd-dotnet-sample@sha256:xxx...)
 ・
 ・
 ・
@@ -443,7 +443,7 @@ spec:
 ![](./images/4/038.png)
 
 ArgoCDの同期が完了したらアプリケーションを確認します。
-OpenShiftの画面に戻り、[管理者]から[Developer]に切り替えて、[トポロジー]をクリックして　**pipeline-dotnet-sample**　のルートからアプリケーションを開きます。
+OpenShiftの画面に戻り、[管理者]から[Developer]に切り替えて、[トポロジー]をクリックして　**cicd-dotnet-sample**　のルートからアプリケーションを開きます。
 ![](./images/4/039.png)
 
 アプリケーションが更新されていることが確認できましたでしょうか。
