@@ -210,26 +210,26 @@ OpenShiftのWebコンソールへ戻り、[Developer]から[管理者]に切り�
 ・
 metadata:
   labels:
-    app.kubernetes.io/instance: pipeline-dotnet-sample # 末尾の'-git'を削除
-    app.kubernetes.io/name: pipeline-dotnet-sample # 末尾の'-git'を削除
+    app.kubernetes.io/instance: cicd-dotnet-sample # 末尾の'-git'を削除
+    app.kubernetes.io/name: cicd-dotnet-sample # 末尾の'-git'を削除
     pipeline.openshift.io/runtime: dotnet
     pipeline.openshift.io/runtime-version: 5.0-ubi8
     pipeline.openshift.io/type: kubernetes
-  name: pipeline-dotnet-sample # 末尾の'-git'を削除
+  name: cicd-dotnet-sample # 末尾の'-git'を削除
   namespace: dojo
 spec:
   params:
-    - default: pipeline-dotnet-sample # 末尾の'-git'を削除
+    - default: cicd-dotnet-sample # 末尾の'-git'を削除
       name: APP_NAME
       type: string
-    - default: 'https://github.com/ご自身のGitHubアカウント/pipeline-dotnet-sample.git'
+    - default: 'https://github.com/ご自身のGitHubアカウント/cicd-dotnet-sample.git'
       name: GIT_REPO
       type: string
     - default: main # 'feature_dojo'を'main'に変更
       name: GIT_REVISION
       type: string
     - default: >-
-        image-registry.openshift-image-registry.svc:5000/dojo/pipeline-dotnet-sample # 末尾の'-git'を削除
+        image-registry.openshift-image-registry.svc:5000/dojo/cicd-dotnet-sample # 末尾の'-git'を削除
       name: IMAGE_NAME
       type: string
     - default: SampleApp
