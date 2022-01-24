@@ -119,13 +119,15 @@ GitHubにサインイン(Sign in)してください。まだアカウント登�
 ブラウザーで[https://github.com/IBMDeveloperTokyo/cicd-dotnet-sample](https://github.com/IBMDeveloperTokyo/cicd-dotnet-sample)を開いてください。
 
 [Fork]ボタンをクリックして、自分のアカウントを選択してください。
-![](./images/011.png)
+![](./images/4/041.png)
 
 Forkする際に指定した自分のリポジトリーへ、対象のプロジェクトがForkされたことを確認します。
 リポジトリーのパスの最初の部分が自分のGitHubアカウントになっていればOKです。
-![](./images/012.png)
+![](./images/4/042.png)
 
 Forkができたら、featureブランチ「feature_dojo」を作成します。
+> **Create branch: feature_dojo from 'main'**　をクリックし、①のブランチ名が「feature_dojo」に変わったら作成完了です。
+
 ![](./images/4/012.png)
 
 ### 3.2 開発環境の作成
@@ -144,6 +146,7 @@ OpenShiftのWebコンソールへ戻り、[Developer]から[管理者]に切り�
 
 | 項目 | 入力値 | 説明 |
 | ---- | ---- | ---- |
+| [GitリポジトリーURL] | ForkしたGitHubリポジトリのURL | CICDで使用するGitHubリポジトリ |
 | [Gitリファレンス] | feature_dojo | ブランチ名 |
 | [コンテキストディレクトリー] | /SampleApp | アプリケーションディレクトリ |
 
@@ -179,13 +182,11 @@ OpenShiftのWebコンソールへ戻り、[Developer]から[管理者]に切り�
 
 #### 3.3.2 本番環境のパイプラインの作成
 
-[管理者]から[Developer]に切り替えて、[パイプラインの作成]をクリックします。
+[管理者]から[Developer]に切り替えて、[パイプライン]を選択し、[パイプラインの作成]をクリックします。
 ![](./images/4/018.png)
 
 パイプラインビルダーが表示されたら、YAMLビューを選択し、以下のYAMLで上書きし、17行目の　"ご自身のGitHubアカウント名"　の部分を書き換えてください。
 ![](./images/4/019.png)
-
-
 
 ```yaml
 apiVersion: tekton.dev/v1beta1
@@ -414,15 +415,16 @@ ArgoCDの画面に戻り、アプリケーション dojo-gitops をクリック�
 </div>
 ```
 
-OpenShiftの画面に戻り、[Developer]から[管理者]に切り替えて、[パイプライン]をクリックし、**pipeline-dotnet-sample-git** の完了を待ちます。
+OpenShiftの画面に戻り、[Developer]から[管理者]に切り替えて、[パイプライン]をクリックし、**cicd-dotnet-sample-git** の完了を待ちます。
 ![](./images/4/036.png)
 
-パイプラインの完了を確認したら、[ビルド] > [イメージストリームタグ] > **pipeline-dotnet-sample** のリンクをクリックします。
+パイプラインの完了を確認したら、[ビルド] > [イメージストリームタグ] > **cicd-dotnet-sample** のリンクをクリックします。
+![](./images/4/037.png)
 
 イメージストリームの詳細画面が表示されたら、YAMLタブをクリックし、dockerImageReferenceに記載されているパラメータをコピーします。
 > 複数存在しますが、先頭のものが一番最新のイメージとなるので、2つ目以降の値は使用しないでください。
 
-![](./images/4/037.png)
+![](./images/4/038.png)
 
 GitHubリポジトリに移動し、**mainリポジトリ** の [/gitops/dotnet-sample-deployment.yaml](/gitops/dotnet-sample-deployment.yaml)  の20行目 を更新します。
 右上にある Editボタン から直接変更し、画面下部の [Commit changes]を押してください。
@@ -456,11 +458,11 @@ spec:
 更新ができたらArgoCDの画面に移動し、同期が開始・完了することを確認します。
 > 3分周期で同期をしているので少し時間がかかる可能性があります。
 
-![](./images/4/038.png)
+![](./images/4/039.png)
 
 ArgoCDの同期が完了したらアプリケーションを確認します。
 OpenShiftの画面に戻り、[管理者]から[Developer]に切り替えて、[トポロジー]をクリックして　**cicd-dotnet-sample**　のルートからアプリケーションを開きます。
-![](./images/4/039.png)
+![](./images/4/040.png)
 
 アプリケーションが更新されていることが確認できましたでしょうか。
 
