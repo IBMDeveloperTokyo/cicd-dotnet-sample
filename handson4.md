@@ -179,57 +179,39 @@ OpenShiftのWebコンソールへ戻り、[Developer]から[管理者]に切り�
 
 #### 3.3.2 本番環境のパイプラインの作成
 
-[管理者]から[Developer]に切り替えて、[パイプライン]をクリックし、**pipeline-dotnet-sample-git** のリンクをクリックします。
-![](./images/4/016.png)
-
-パイプラインの詳細が表示されたら、[YAML]タブをクリックし、表示されているYAMLを全てコピーして、左上のパンくずリストの **パイプライン** をクリックします。
-![](./images/4/017.png)
-
-[パイプラインの作成]をクリックします。
+[管理者]から[Developer]に切り替えて、[パイプラインの作成]をクリックします。
 ![](./images/4/018.png)
 
-パイプラインビルダーが表示されたら、YAMLビューを選択し、先ほどコピーしたパイプラインのYAMLで上書きします。
+パイプラインビルダーが表示されたら、YAMLビューを選択し、以下のYAMLで上書きし、17行目の　"ご自身のGitHubアカウント名"　の部分を書き換えてください。
 ![](./images/4/019.png)
 
-開発用から本番用に書き換えるため、まずは不要なパラメータを削除します。
-削除するパラメータは以下の5ヶ所です。
-`metadata.creationTimestamp`
-`metadate.generation`
-`metadata.managedFields`
-`metadata.resourceVersion`
-`metadata.uid`
-`spec.params.name` (deployの部分のみ)
-![](./images/4/020.png)
 
-削除が完了したら、本番環境用のパラメータに変更します。
-`# コメント`がある部分を変更してください。
 
 ```yaml
-・
-・
-・
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
 metadata:
   labels:
-    app.kubernetes.io/instance: cicd-dotnet-sample # 末尾の'-git'を削除
-    app.kubernetes.io/name: cicd-dotnet-sample # 末尾の'-git'を削除
+    app.kubernetes.io/instance: cicd-dotnet-sample
+    app.kubernetes.io/name: cicd-dotnet-sample
     pipeline.openshift.io/runtime: dotnet
     pipeline.openshift.io/runtime-version: 5.0-ubi8
     pipeline.openshift.io/type: kubernetes
-  name: cicd-dotnet-sample # 末尾の'-git'を削除
+  name: cicd-dotnet-sample
   namespace: dojo
 spec:
   params:
-    - default: cicd-dotnet-sample # 末尾の'-git'を削除
+    - default: cicd-dotnet-sample
       name: APP_NAME
       type: string
     - default: 'https://github.com/ご自身のGitHubアカウント/cicd-dotnet-sample.git'
       name: GIT_REPO
       type: string
-    - default: main # 'feature_dojo'を'main'に変更
+    - default: main
       name: GIT_REVISION
       type: string
     - default: >-
-        image-registry.openshift-image-registry.svc:5000/dojo/cicd-dotnet-sample # 末尾の'-git'を削除
+        image-registry.openshift-image-registry.svc:5000/dojo/cicd-dotnet-sample
       name: IMAGE_NAME
       type: string
     - default: SampleApp
@@ -238,9 +220,43 @@ spec:
     - default: 5.0-ubi8
       name: VERSION
       type: string
-・
-・
-・
+  tasks:
+    - name: fetch-repository
+      params:
+        - name: url
+          value: $(params.GIT_REPO)
+        - name: revision
+          value: $(params.GIT_REVISION)
+        - name: subdirectory
+          value: ''
+        - name: deleteExisting
+          value: 'true'
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: workspace
+    - name: build
+      params:
+        - name: IMAGE
+          value: $(params.IMAGE_NAME)
+        - name: TLSVERIFY
+          value: 'false'
+        - name: PATH_CONTEXT
+          value: $(params.PATH_CONTEXT)
+        - name: VERSION
+          value: $(params.VERSION)
+      runAfter:
+        - fetch-repository
+      taskRef:
+        kind: ClusterTask
+        name: s2i-dotnet
+      workspaces:
+        - name: source
+          workspace: workspace
+  workspaces:
+    - name: workspace
 ```
 
 変更が完了したら、[作成]をクリックします。
@@ -408,7 +424,7 @@ OpenShiftの画面に戻り、[Developer]から[管理者]に切り替えて、[
 
 ![](./images/4/037.png)
 
-GitHubリポジトリに移動し、**mainリポジトリ** の [/gitops/dotnet-sample-deployment.yaml](/gitops/dotnet-sample-deployment.yaml)  を更新します。
+GitHubリポジトリに移動し、**mainリポジトリ** の [/gitops/dotnet-sample-deployment.yaml](/gitops/dotnet-sample-deployment.yaml)  の20行目 を更新します。
 右上にある Editボタン から直接変更し、画面下部の [Commit changes]を押してください。
 
 ```yaml
